@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("cric-apis")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+893679ed303fd98a831418404b09e0ddff28e670")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b3b9736d254f6995ab269e5bd7b60bbdbeb09146")]
 [assembly: System.Reflection.AssemblyProductAttribute("cric-apis")]
 [assembly: System.Reflection.AssemblyTitleAttribute("cric-apis")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
