@@ -14,4 +14,10 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\cric-api.Models\cric-api.Models.csproj" />
+    <ProjectReference Include="..\cric-api.DTOs\cric-api.DTOs.csproj" />
+    <ProjectReference Include="..\cric-api.Repository\cric-api.Repository.csproj" />
+  </ItemGroup>
+
 </Project>

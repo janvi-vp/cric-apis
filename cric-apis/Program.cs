@@ -1,5 +1,5 @@
-using cric_apis.Data;
-using cric_apis.Repository;
+using cric_api.Data;
+using cric_api.Repository;
 using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 

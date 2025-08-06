@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using cric_apis.Repository;
-using cric_apis.Data;
-using cric_apis.Models;
+using cric_api.Repository;
+using cric_api.Data;
+using cric_api.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace cric_apis.Controllers
