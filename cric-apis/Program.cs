@@ -17,11 +17,9 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
 });
 
-builder.Services.AddDbContext<CricContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-builder.Services.AddScoped<PlayerService, PlayerService>();
-builder.Services.AddScoped<PlayerRepository, PlayerRepository>();
+var services = builder.Services;
+var dbConnectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? "";
+cric_api.Services.IocConfig.ConfigureService(ref services, dbConnectionString);
 
 var app = builder.Build();
 

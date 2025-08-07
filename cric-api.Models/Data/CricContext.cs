@@ -11,8 +11,8 @@ namespace cric_api.Data
     {
         public CricContext(DbContextOptions<CricContext> options) : base(options) { }
 
-        public DbSet<Player> Players { get; set; } 
-        
-        public DbSet <Team> Teams { get; set; }
+        public DbSet<Player> Players { get; set; }
+
+        public DbSet<Team> Teams { get; set; }
     }
 }
