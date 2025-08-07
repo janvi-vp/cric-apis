@@ -1,5 +1,6 @@
 using cric_api.Data;
 using cric_api.Repository;
+using cric_api.Services;
 using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,7 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
 builder.Services.AddDbContext<CricContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddScoped<PlayerService, PlayerService>();
 builder.Services.AddScoped<PlayerRepository, PlayerRepository>();
 
 var app = builder.Build();

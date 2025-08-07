@@ -1,11 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using cric_api.Repository;
-using cric_api.Data;
-using cric_api.Models;
 using Microsoft.AspNetCore.Mvc;
+using cric_api.Services;
 
 namespace cric_apis.Controllers
 {
@@ -13,21 +7,18 @@ namespace cric_apis.Controllers
     [ApiController]
     public class PlayerController : ControllerBase
     {
-        private readonly CricContext _context;
+        private readonly PlayerService _service;
 
-        private readonly PlayerRepository _playerRepo;
-
-        public PlayerController(CricContext context, PlayerRepository playerRepo)
+        public PlayerController(PlayerService service)
         {
-            _context = context;
-            _playerRepo = playerRepo;
+            _service = service;
         }
 
         [HttpGet]
-        [Route("{teamId}")]
+        [Route("getbyteam/{teamId}")]
         public async Task<IActionResult> GetAllPlayersByTeam([FromRoute] Guid teamId)
         {
-            var players = await _playerRepo.GetAllPlayersByTeamAsync(teamId);
+            var players = await _service.GetAllPlayersByTeamAsync(teamId);
 
             return Ok(players);
         } 

@@ -16,9 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\cric-api.Models\cric-api.Models.csproj" />
     <ProjectReference Include="..\cric-api.DTOs\cric-api.DTOs.csproj" />
-    <ProjectReference Include="..\cric-api.Repository\cric-api.Repository.csproj" />
+    <ProjectReference Include="..\cric-api.Services\cric-api.Services.csproj" />
   </ItemGroup>
 
 </Project>
