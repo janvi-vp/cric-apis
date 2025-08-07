@@ -1,13 +1,15 @@
 using cric_api.DTOs.Response;
 using cric_api.Repository;
+using cric_api.Repository.Interfaces;
+using cric_api.Services.Interfaces;
 
 namespace cric_api.Services
 {
-    public class PlayerService
+    public class PlayerService : IPlayerService
     {
-        private PlayerRepository _repository;
+        private IPlayerRepository _repository;
 
-        public PlayerService(PlayerRepository repository)
+        public PlayerService(IPlayerRepository repository)
         {
             _repository = repository;
         }

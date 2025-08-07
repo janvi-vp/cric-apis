@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using cric_api.Services;
+using cric_api.Services.Interfaces;
 
 namespace cric_apis.Controllers
 {
@@ -7,9 +8,9 @@ namespace cric_apis.Controllers
     [ApiController]
     public class PlayerController : ControllerBase
     {
-        private readonly PlayerService _service;
+        private readonly IPlayerService _service;
 
-        public PlayerController(PlayerService service)
+        public PlayerController(IPlayerService service)
         {
             _service = service;
         }

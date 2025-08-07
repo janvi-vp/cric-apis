@@ -6,10 +6,11 @@ using cric_api.Data;
 using cric_api.Models;
 using cric_api.DTOs.Response;
 using Microsoft.EntityFrameworkCore;
+using cric_api.Repository.Interfaces;
 
 namespace cric_api.Repository
 {
-    public class PlayerRepository
+    public class PlayerRepository : IPlayerRepository
     {
         private readonly CricContext _context;
         public PlayerRepository(CricContext context)
