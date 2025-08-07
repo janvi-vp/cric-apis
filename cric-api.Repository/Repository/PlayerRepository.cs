@@ -18,15 +18,28 @@ namespace cric_api.Repository
             _context = context;
         }
 
-        public async Task<List<PlayersByTeam>> GetAllPlayersByTeamAsync(Guid teamId)
+        public async Task<List<PlayerViewModel>> GetAllPlayersByTeamAsync(int teamId)
         {
-            return await _context.Players.Where(p => p.Team.Id == teamId).Select(s => new PlayersByTeam
-                {
-                    Id = s.Id,
-                    Name = s.Name,
-                    Age = s.Age,
-                    Role = s.Role
-                }).ToListAsync();
+            var players = await _context.Players.Where(p => p.Team.Id == teamId).ToListAsync();
+            return ToPlayersByTeam(players);
+
         }
+
+        private PlayerViewModel ToPlayerByTeam(Player player)
+        {
+            return new PlayerViewModel
+            {
+                Id = player.Id,
+                FirstName = player.FirstName,
+                LastName = player.LastName,
+                Email = player.Email,
+                Role = player.Role.ToString()
+            };
+        }
+
+        private List<PlayerViewModel> ToPlayersByTeam(List<Player> players)
+        {
+            return players.Select(s => ToPlayerByTeam(s)).ToList();
+        } 
     }
 }

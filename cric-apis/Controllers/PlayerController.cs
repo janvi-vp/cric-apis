@@ -17,7 +17,7 @@ namespace cric_apis.Controllers
 
         [HttpGet]
         [Route("getbyteam/{teamId}")]
-        public async Task<IActionResult> GetAllPlayersByTeam([FromRoute] Guid teamId)
+        public async Task<IActionResult> GetAllPlayersByTeam([FromRoute] int teamId)
         {
             var players = await _service.GetAllPlayersByTeamAsync(teamId);
 

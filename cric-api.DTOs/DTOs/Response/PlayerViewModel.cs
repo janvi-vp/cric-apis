@@ -2,11 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using static cric_api.DTOs.Utilities.Enums;
 
-namespace cric_api.Models
+namespace cric_api.DTOs.Response
 {
-    public class Player
+    public class PlayerViewModel
     {
         public int Id { get; set; }
 
@@ -16,13 +15,7 @@ namespace cric_api.Models
 
         public required string Email { get; set; }
 
-        public DateOnly Birthday { get; set; }
-
-        public string? BirthPlace { get; set; }
-
-        public required PlayerRole Role { get; set; }
-
-        public required Team Team { get; set; }
+        public required string Role { get; set; }
 
     }
 }

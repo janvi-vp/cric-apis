@@ -8,7 +8,7 @@ using cric_api.Data;
 
 #nullable disable
 
-namespace cric_api.Migrations
+namespace cric_api.Models.Migrations
 {
     [DbContext(typeof(CricContext))]
     partial class CricContextModelSnapshot : ModelSnapshot
@@ -22,25 +22,37 @@ namespace cric_api.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("cric_apis.Models.Player", b =>
+            modelBuilder.Entity("cric_api.Models.Player", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Age")
                         .HasColumnType("int");
 
-                    b.Property<string>("Name")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("BirthPlace")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateOnly>("Birthday")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Role")
+                    b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("TeamId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TeamId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -49,11 +61,13 @@ namespace cric_api.Migrations
                     b.ToTable("Players");
                 });
 
-            modelBuilder.Entity("cric_apis.Models.Team", b =>
+            modelBuilder.Entity("cric_api.Models.Team", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -64,18 +78,14 @@ namespace cric_api.Migrations
                     b.ToTable("Teams");
                 });
 
-            modelBuilder.Entity("cric_apis.Models.Player", b =>
+            modelBuilder.Entity("cric_api.Models.Player", b =>
                 {
-                    b.HasOne("cric_apis.Models.Team", "Team")
+                    b.HasOne("cric_api.Models.Team", null)
                         .WithMany("Players")
-                        .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Team");
+                        .HasForeignKey("TeamId");
                 });
 
-            modelBuilder.Entity("cric_apis.Models.Team", b =>
+            modelBuilder.Entity("cric_api.Models.Team", b =>
                 {
                     b.Navigation("Players");
                 });

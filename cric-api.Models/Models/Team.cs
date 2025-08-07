@@ -7,10 +7,10 @@ namespace cric_api.Models
 {
     public class Team
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
-        public string Name { get; set; }
+        public required string Name { get; set; }
 
-        public List<Player> Players { get; set; }
+        public List<Player>? Players { get; set; }
     }
 }

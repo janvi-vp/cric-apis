@@ -8,6 +8,6 @@ namespace cric_api.Repository.Interfaces
 {
     public interface IPlayerRepository
     {
-        Task<List<PlayersByTeam>> GetAllPlayersByTeamAsync(Guid teamId);
+        Task<List<PlayerViewModel>> GetAllPlayersByTeamAsync(int teamId);
     }
 }
