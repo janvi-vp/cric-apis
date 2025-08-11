@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static cric_api.DTOs.Utilities.Enums;
 
 namespace cric_api.DTOs.Response
 {
@@ -9,13 +10,19 @@ namespace cric_api.DTOs.Response
     {
         public int Id { get; set; }
 
-        public required string FirstName { get; set; }
+        public string FirstName { get; set; }
 
-        public required string LastName { get; set; }
+        public string LastName { get; set; }
 
-        public required string Email { get; set; }
+        public string Email { get; set; }
 
-        public required string Role { get; set; }
+        public DateOnly Birthday { get; set; }
+
+        public string BirthPlace { get; set; }
+
+        public string Role { get; set; }
+
+        public PlayerRole RoleEnum { get; set; } 
 
     }
 }

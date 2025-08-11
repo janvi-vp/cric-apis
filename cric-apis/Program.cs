@@ -1,6 +1,7 @@
 using cric_api.Data;
 using cric_api.Repository;
 using cric_api.Services;
+using cric_apis.Middleware;
 using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +23,8 @@ var dbConnectionString = builder.Configuration.GetConnectionString("DefaultConne
 cric_api.Services.IocConfig.ConfigureService(ref services, dbConnectionString);
 
 var app = builder.Build();
+
+app.UseErrorHandling();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

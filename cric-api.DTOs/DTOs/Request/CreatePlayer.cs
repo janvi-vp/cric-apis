@@ -4,12 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using static cric_api.DTOs.Utilities.Enums;
 
-namespace cric_api.Models
+namespace cric_api.DTOs.DTOs.Request
 {
-    public class Player
+    public class CreatePlayer
     {
-        public int Id { get; set; }
-
         public required string FirstName { get; set; }
 
         public required string LastName { get; set; }
