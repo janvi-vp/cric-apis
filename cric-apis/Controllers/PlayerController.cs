@@ -19,119 +19,46 @@ namespace cric_apis.Controllers
 
 
         [HttpGet]
-        [Route("GetPlayers")]
-        public async Task<IActionResult> GetPlayers([FromQuery]GetPlayersRequestModel request)
+        [Route("getall")]
+        public async Task<IActionResult> GetAll([FromQuery]GetPlayersRequestModel request)
         {
             var players = await _service.GetPlayers(request);
             return Ok(ApiResponse<object>.Ok(players));
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllPlayers(int pageNumber, int pageSize)
-        {
-            try
-            {
-                var players = await _service.GetAllPlayers(pageNumber, pageSize);
-                return Ok(ApiResponse<object>.Ok(players));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ApiResponse<object>.Fail(ex.Message));
-            }
-        }
-
-        [HttpGet]
-        [Route("getbyfilter")]
-        public async Task<IActionResult> GetAllPlayersByFilter([FromQuery] string? firstName = null, [FromQuery] string? lastName = null, [FromQuery] string? email = null)
-        {
-            try
-            {
-                var players = await _service.GetAllPlayersByFilter(firstName, lastName, email);
-                return Ok(ApiResponse<object>.Ok(players));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ApiResponse<object>.Fail(ex.Message));
-            }
-        }
-
-        [HttpGet]
-        [Route("getbysorting")]
-
-        public async Task<IActionResult> GetAllPlayersBySorting([FromQuery] string? sortingParam = null)
-        {
-            try
-            {
-                var players = await _service.GetALlPlayersBySorting(sortingParam);
-                return Ok(ApiResponse<object>.Ok(players));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ApiResponse<object>.Fail(ex.Message));
-            }
-        }
-
-        [HttpGet]
         [Route("getbyid")]
 
-        public async Task<IActionResult> GetPlayerById([FromQuery] int id)
+        public async Task<IActionResult> GetById([FromQuery] int id)
         {
-            try
-            {
-                var player = await _service.GetPlayerById(id);
-                return Ok(ApiResponse<object>.Ok(player));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ApiResponse<object>.Fail(ex.Message));
-            }
+            var player = await _service.GetPlayerById(id);
+            return Ok(ApiResponse<object>.Ok(player));
         }
 
         [HttpPost]
-
+        [Route("add")]
         public async Task<IActionResult> AddPlayer([FromBody] CreatePlayer player)
         {
-            try
-            {
-                await _service.AddPlayer(player);
-                return Ok(ApiResponse<object>.Ok("Book is Added!"));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ApiResponse<object>.Fail(ex.Message));
-            }
+            await _service.AddPlayer(player);
+            return Ok(ApiResponse<object>.Ok("Player is Added!"));
         }
 
         [HttpPut]
-        [Route("editplayer/{id}")]
+        [Route("edit/{id}")]
 
         public async Task<IActionResult> EditPlayer([FromRoute] int id, [FromBody] EditPlayer editPlayer)
         {
-            try
-            {
-                await _service.EditPlayer(editPlayer, id);
-                return Ok(ApiResponse<object>.Ok("Player is Edited!"));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ApiResponse<object>.Fail(ex.Message));
-            }
+            await _service.EditPlayer(editPlayer, id);
+            return Ok(ApiResponse<object>.Ok("Player is Edited!"));
         }
 
         [HttpDelete]
-        [Route("deleteplayer/{id}")]
+        [Route("delete/{id}")]
 
         public async Task<IActionResult> DeletePlayer([FromRoute] int id)
         {
-            try
-            {
-                await _service.DeletePlayer(id);
-                return Ok(ApiResponse<object>.Ok("Player has been Deleted!"));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ApiResponse<object>.Fail(ex.Message));
-            }
+            await _service.DeletePlayer(id);
+            return Ok(ApiResponse<object>.Ok("Player has been Deleted!"));
         }
     }
 }
