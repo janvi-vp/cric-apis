@@ -19,9 +19,10 @@ namespace cric_api.Services
             _repository = repository;
         }
 
-        public async Task AddPlayer(CreatePlayer player)
+        public async Task<PlayerViewModel> AddPlayer(CreatePlayer player)
         {
-            await _repository.AddPlayer(player);
+            var newPlayer = await _repository.AddPlayer(player);
+            return newPlayer;
         }
 
         public async Task DeletePlayer(int id)
@@ -29,7 +30,7 @@ namespace cric_api.Services
             await _repository.DeletePlayer(id);
         }
 
-        public async Task EditPlayer(EditPlayer editPlayer, int id)
+        public async Task<PlayerViewModel> EditPlayer(EditPlayer editPlayer, int id)
         {
             var isExist = await _repository.IsExist(id);
 
@@ -70,7 +71,9 @@ namespace cric_api.Services
                 entity.RoleEnum = editPlayer.Role.Value;
             }
 
-            await _repository.EditPlayer(entity);
+            var editedPlayer = await _repository.EditPlayer(entity);
+
+            return editedPlayer;
         }
 
         public async Task<List<PlayerViewModel>> GetAllPlayers(int pageNumber, int pageSize)

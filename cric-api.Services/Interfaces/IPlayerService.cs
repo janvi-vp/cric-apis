@@ -21,9 +21,9 @@ namespace cric_api.Services.Interfaces
 
         Task<PlayerViewModel> GetPlayerById(int id);
 
-        Task AddPlayer(CreatePlayer player);
+        Task<PlayerViewModel> AddPlayer(CreatePlayer player);
 
-        Task EditPlayer(EditPlayer editPlayer, int id);
+        Task<PlayerViewModel> EditPlayer(EditPlayer editPlayer, int id);
 
         Task DeletePlayer(int id);
     }

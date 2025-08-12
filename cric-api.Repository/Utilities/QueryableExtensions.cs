@@ -11,7 +11,7 @@ namespace cric_api.Repository.Utilities
     public static class QueryableExtensions
     {
         public static async Task<PaginatedResponse<T>> ToPaginatedAsync<T>(this IQueryable<T> source,
-            IPaginationRequest paginationRequest) where T : class
+            IPaginationRequest paginationRequest, CancellationToken ct = default) where T : class
         {
             var pageNumber = paginationRequest.PageNumber;
             var pageSize = paginationRequest.PageSize;

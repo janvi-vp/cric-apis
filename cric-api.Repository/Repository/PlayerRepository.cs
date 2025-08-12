@@ -21,7 +21,7 @@ namespace cric_api.Repository
             _context = context;
         }
 
-        public async Task AddPlayer(CreatePlayer player)
+        public async Task<PlayerViewModel> AddPlayer(CreatePlayer player)
         {
             var alreadyExist = await _context.Players.Where(p => p.Email == player.Email).FirstOrDefaultAsync();
 
@@ -39,6 +39,7 @@ namespace cric_api.Repository
 
                 await _context.Players.AddAsync(newPlayer);
                 await _context.SaveChangesAsync();
+                return await GetPlayerById(newPlayer.Id);
             }
 
             else
@@ -57,8 +58,8 @@ namespace cric_api.Repository
             }
 
         }
-        
-        public async Task EditPlayer(PlayerViewModel player)
+
+        public async Task<PlayerViewModel> EditPlayer(PlayerViewModel player)
         {
             var entity = await _context.Players.FindAsync(player.Id);
             if (entity != null)
@@ -72,6 +73,7 @@ namespace cric_api.Repository
 
                 await _context.SaveChangesAsync();
             }
+            return await GetPlayerById(player.Id);
         }
 
         public async Task<List<PlayerViewModel>> GetAllPlayers(int pageNumber, int pageSize)

@@ -21,9 +21,9 @@ namespace cric_api.Repository.Interfaces
 
         Task<bool> IsExist(int id);
 
-        Task AddPlayer(CreatePlayer player);
+        Task <PlayerViewModel> AddPlayer(CreatePlayer player);
 
-        Task EditPlayer(PlayerViewModel player);
+        Task <PlayerViewModel> EditPlayer(PlayerViewModel player);
 
         Task DeletePlayer(int id);
         Task<PaginatedResponse<PlayerViewModel>> GetPlayers(GetPlayersRequestModel request);

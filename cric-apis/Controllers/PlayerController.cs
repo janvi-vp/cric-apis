@@ -39,8 +39,8 @@ namespace cric_apis.Controllers
         [Route("add")]
         public async Task<IActionResult> AddPlayer([FromBody] CreatePlayer player)
         {
-            await _service.AddPlayer(player);
-            return Ok(ApiResponse<object>.Ok("Player is Added!"));
+            var newPlayer = await _service.AddPlayer(player);
+            return Ok(ApiResponse<object>.Ok(newPlayer));
         }
 
         [HttpPut]
@@ -48,8 +48,8 @@ namespace cric_apis.Controllers
 
         public async Task<IActionResult> EditPlayer([FromRoute] int id, [FromBody] EditPlayer editPlayer)
         {
-            await _service.EditPlayer(editPlayer, id);
-            return Ok(ApiResponse<object>.Ok("Player is Edited!"));
+            var editedPlayer = await _service.EditPlayer(editPlayer, id);
+            return Ok(ApiResponse<object>.Ok(editedPlayer));
         }
 
         [HttpDelete]
