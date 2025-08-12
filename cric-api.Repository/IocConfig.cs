@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using cric_api.Repository.Interfaces;
+using cric_api.Repository.Repository;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace cric_api.Repository
@@ -13,6 +14,7 @@ namespace cric_api.Repository
         {
             Models.IocConfig.ConfigureService(ref services, connectionString);
             services.AddTransient<IPlayerRepository, PlayerRepository>();
+            services.AddTransient<ITeamRepository, TeamRepository>();
         }
     }
 }

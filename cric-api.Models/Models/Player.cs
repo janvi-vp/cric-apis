@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using cric_api.Models.Models;
 using static cric_api.DTOs.Utilities.Enums;
 
 namespace cric_api.Models
@@ -21,5 +22,7 @@ namespace cric_api.Models
         public string? BirthPlace { get; set; }
 
         public required PlayerRole Role { get; set; }
+        
+        public List<TeamPlayer> TeamPlayers { get; set; }
     }
 }
