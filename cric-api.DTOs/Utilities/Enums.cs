@@ -14,5 +14,10 @@ namespace cric_api.DTOs.Utilities
             WicketKeeper,
             AllRounder
         }
+
+        public enum SortDirection
+        {
+            ASC, DESC
+        }
     }
 }

@@ -17,6 +17,15 @@ namespace cric_apis.Controllers
             _service = service;
         }
 
+
+        [HttpGet]
+        [Route("GetPlayers")]
+        public async Task<IActionResult> GetPlayers([FromQuery]GetPlayersRequestModel request)
+        {
+            var players = await _service.GetPlayers(request);
+            return Ok(ApiResponse<object>.Ok(players));
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetAllPlayers(int pageNumber, int pageSize)
         {

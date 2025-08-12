@@ -1,13 +1,15 @@
+using cric_api.Data;
+using cric_api.DTOs.DTOs.Request;
+using cric_api.DTOs.Response;
+using cric_api.DTOs.Utilities;
+using cric_api.Models;
+using cric_api.Repository.Interfaces;
+using cric_api.Repository.Utilities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using cric_api.Data;
-using cric_api.Models;
-using cric_api.DTOs.Response;
-using Microsoft.EntityFrameworkCore;
-using cric_api.Repository.Interfaces;
-using cric_api.DTOs.DTOs.Request;
 
 namespace cric_api.Repository
 {
@@ -75,13 +77,29 @@ namespace cric_api.Repository
         public async Task<List<PlayerViewModel>> GetAllPlayers(int pageNumber, int pageSize)
         {
             var players = await _context.Players.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
-            return ToPlayersByTeam(players);
+            return ToPlayerViewModel(players);
+        }
+
+        public async Task<PaginatedResponse<PlayerViewModel>> GetPlayers(GetPlayersRequestModel request)
+        {
+            IQueryable<Player> query = _context.Players;
+
+            if (!string.IsNullOrEmpty(request.SearchText))
+            {
+                query = query.Where(x => x.FirstName.Contains(request.SearchText) || x.LastName.Contains(request.SearchText) || x.Email.Contains(request.SearchText));
+            }
+
+            query = query.OrderByColumn(request.SortByColumn, request.SortDirection == Enums.SortDirection.ASC);
+
+            var result = await query.ToPaginatedAsync(request);
+
+            return new PaginatedResponse<PlayerViewModel>(ToPlayerViewModel(result.Items.ToList()), result.TotalCount, result.PageNumber, result.PageSize);
         }
 
         public async Task<List<PlayerViewModel>> GetAllPlayersByFilter(string firstName, string lastName, string email)
         {
             var players = await _context.Players.Where(p => p.FirstName.Contains(firstName) || p.LastName.Contains(lastName) || p.Email.Contains(email)).ToListAsync();
-            return ToPlayersByTeam(players);
+            return ToPlayerViewModel(players);
         }
 
         public async Task<List<PlayerViewModel>> GetALlPlayersBySorting(string sortingParam)
@@ -89,19 +107,19 @@ namespace cric_api.Repository
             if (sortingParam == "DSC")
             {
                 var players = await _context.Players.Order().ToListAsync();
-                return ToPlayersByTeam(players);
+                return ToPlayerViewModel(players);
             }
             else
             {
                 var players = await _context.Players.OrderDescending().ToListAsync();
-                return ToPlayersByTeam(players);
+                return ToPlayerViewModel(players);
             }
         }
 
         public async Task<PlayerViewModel> GetPlayerById(int id)
         {
             var player = await _context.Players.Where(p => p.Id == id).FirstOrDefaultAsync();
-            return ToPlayerByTeam(player);
+            return ToPlayerViewModel(player);
         }
 
         public async Task<bool> IsExist(int id)
@@ -109,7 +127,7 @@ namespace cric_api.Repository
             return await _context.Players.AnyAsync(p => p.Id == id);
         }
 
-        private PlayerViewModel ToPlayerByTeam(Player player)
+        private PlayerViewModel ToPlayerViewModel(Player player)
         {
             return new PlayerViewModel
             {
@@ -124,9 +142,9 @@ namespace cric_api.Repository
             };
         }
 
-        private List<PlayerViewModel> ToPlayersByTeam(List<Player> players)
+        private List<PlayerViewModel> ToPlayerViewModel(List<Player> players)
         {
-            return players.Select(s => ToPlayerByTeam(s)).ToList();
+            return players.Select(s => ToPlayerViewModel(s)).ToList();
         } 
     }
 }

@@ -1,5 +1,6 @@
 using cric_api.DTOs.DTOs.Request;
 using cric_api.DTOs.Response;
+using cric_api.DTOs.Utilities;
 using cric_api.Models;
 using cric_api.Repository;
 using cric_api.Repository.Interfaces;
@@ -75,6 +76,11 @@ namespace cric_api.Services
         public async Task<List<PlayerViewModel>> GetAllPlayers(int pageNumber, int pageSize)
         {
             return await _repository.GetAllPlayers(pageNumber, pageSize);
+        }
+
+        public async Task<PaginatedResponse<PlayerViewModel>> GetPlayers(GetPlayersRequestModel request)
+        {
+            return await _repository.GetPlayers(request);
         }
 
         public async Task<List<PlayerViewModel>> GetAllPlayersByFilter(string firstName, string lastName, string email)
