@@ -1,10 +1,11 @@
+using cric_api.DTOs.DTOs.Request;
+using cric_api.DTOs.Response;
+using cric_api.DTOs.Utilities;
+using cric_api.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using cric_api.DTOs.DTOs.Request;
-using cric_api.DTOs.Response;
-using cric_api.Models;
 
 namespace cric_api.Repository.Interfaces
 {
@@ -25,5 +26,6 @@ namespace cric_api.Repository.Interfaces
         Task EditPlayer(PlayerViewModel player);
 
         Task DeletePlayer(int id);
+        Task<PaginatedResponse<PlayerViewModel>> GetPlayers(GetPlayersRequestModel request);
     }
 }

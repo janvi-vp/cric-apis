@@ -18,6 +18,16 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 var services = builder.Services;
 var dbConnectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? "";
 cric_api.Services.IocConfig.ConfigureService(ref services, dbConnectionString);
@@ -35,6 +45,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors();
 
 app.MapControllers();
 
