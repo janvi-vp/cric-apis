@@ -7,6 +7,7 @@ using cric_api.DTOs.DTOs.Request;
 using cric_api.DTOs.DTOs.Response;
 using cric_api.DTOs.Utilities;
 using cric_api.Models;
+using cric_api.Models.Models;
 using cric_api.Repository.Interfaces;
 using cric_api.Repository.Utilities;
 using Microsoft.EntityFrameworkCore;
@@ -26,21 +27,31 @@ namespace cric_api.Repository.Repository
         {
             var alreadyExist = await _context.Teams.FirstOrDefaultAsync(t => t.Name == team.Name);
 
-            if (alreadyExist == null)
-            {
-                var newTeam = new Team
-                {
-                    Name = team.Name
-                };
-
-                await _context.Teams.AddAsync(newTeam);
-                await _context.SaveChangesAsync();
-                return await GetTeamById(newTeam.Id);
-            }
-            else
-            {
+            if (alreadyExist != null)
                 throw new Exception("Team already exists!");
+
+            var newTeam = new Team
+            {
+                Name = team.Name
+            };
+
+            await _context.Teams.AddAsync(newTeam);
+            await _context.SaveChangesAsync();
+
+            if (team.PlayerIds != null && team.PlayerIds.Any())
+            {
+                var teamPlayers = team.PlayerIds.Select(playerId => new TeamPlayer
+                {
+                    TeamId = newTeam.Id,
+                    PlayerId = playerId
+                }).ToList();
+
+                await _context.TeamPlayers.AddRangeAsync(teamPlayers);
+                await _context.SaveChangesAsync();
             }
+
+            return await GetTeamById(newTeam.Id);
+
         }
 
         public async Task<TeamViewModel> EditTeam(int id, string name)
@@ -97,8 +108,23 @@ namespace cric_api.Repository.Repository
         {
             return teams.Select(s => ToTeamViewModel(s)).ToList();
         }
-        
-         public async Task<bool> IsExist(int id)
+
+        private TeamPlayerViewModel ToTeamPlayerViewModel(TeamPlayer teamPlayer)
+        {
+            return new TeamPlayerViewModel
+            {
+                Id = teamPlayer.Id,
+                TeamId = teamPlayer.TeamId,
+                PlayerId = teamPlayer.PlayerId
+            };
+        }
+
+        private List<TeamPlayerViewModel> ToTeamPlayerViewModel(List<TeamPlayer> teamPlayers)
+        {
+            return teamPlayers.Select(s => ToTeamPlayerViewModel(s)).ToList();
+        }
+
+        public async Task<bool> IsExist(int id)
         {
             return await _context.Teams.AnyAsync(t => t.Id == id);
         }
@@ -109,6 +135,45 @@ namespace cric_api.Repository.Repository
             if (teamToDelete != null)
             {
                 _context.Teams.Remove(teamToDelete);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task<TeamPlayerViewModel> GetTeamPlayerById(int id)
+        {
+            var teamPlayer = await _context.TeamPlayers.FindAsync(id);
+            return ToTeamPlayerViewModel(teamPlayer);
+        }
+
+        public async Task<TeamPlayerViewModel> AddPlayerToTeam(int teamId, int playerId)
+        {
+            var isTeamExist = await _context.Teams.FindAsync(teamId);
+
+            if (isTeamExist != null)
+            {
+                var newTeamPlayer = new TeamPlayer
+                {
+                    TeamId = teamId,
+                    PlayerId = playerId
+                };
+
+                await _context.TeamPlayers.AddAsync(newTeamPlayer);
+                await _context.SaveChangesAsync();
+                return await GetTeamPlayerById(newTeamPlayer.Id);
+            }
+
+            else
+            {
+                throw new Exception("No such team exists!");
+            }
+        }
+
+        public async Task RemovePlayerFromTeam(int teamId, int playerId)
+        {
+            var teamPlayerToBeDeleted = await _context.TeamPlayers.FirstOrDefaultAsync(x => x.TeamId == teamId && x.PlayerId == playerId);
+            if (teamPlayerToBeDeleted != null)
+            {
+                _context.TeamPlayers.Remove(teamPlayerToBeDeleted);
                 await _context.SaveChangesAsync();
             }
         }

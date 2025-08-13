@@ -8,6 +8,8 @@ namespace cric_api.DTOs.DTOs.Request
     public class CreateTeam
     {
         public required string Name { get; set; }
+
+        public List<int> PlayerIds { get; set; }
         
     }
 }

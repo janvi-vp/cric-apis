@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using cric_api.DTOs.DTOs.Request;
 using cric_api.DTOs.DTOs.Response;
 using cric_api.DTOs.Utilities;
+using cric_api.Models;
+using cric_api.Models.Models;
 
 namespace cric_api.Repository.Interfaces
 {
@@ -21,5 +23,11 @@ namespace cric_api.Repository.Interfaces
         Task<TeamViewModel> EditTeam(int id, string name);
 
         Task DeleteTeam(int id);
+
+        Task<TeamPlayerViewModel> AddPlayerToTeam(int teamId, int playerId);
+
+        Task<TeamPlayerViewModel> GetTeamPlayerById(int id);
+
+        Task RemovePlayerFromTeam(int teamId, int playerId);
     }
 }

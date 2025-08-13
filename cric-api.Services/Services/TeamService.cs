@@ -19,6 +19,12 @@ namespace cric_api.Services.Services
             _repository = repository;
         }
 
+        public async Task<TeamPlayerViewModel> AddPlayerToTeam(int teamId, int playerId)
+        {
+            var newTeamPlayer = await _repository.AddPlayerToTeam(teamId, playerId);
+            return newTeamPlayer;
+        }
+
         public async Task<TeamViewModel> AddTeam(CreateTeam team)
         {
             var newTeam = await _repository.AddTeam(team);
@@ -56,9 +62,19 @@ namespace cric_api.Services.Services
             return await _repository.GetTeamById(id);
         }
 
+        public async Task<TeamPlayerViewModel> GetTeamPlayerById(int id)
+        {
+            return await _repository.GetTeamPlayerById(id);
+        }
+
         public async Task<PaginatedResponse<TeamViewModel>> GetTeams(GetTeamsRequestModel request)
         {
             return await _repository.GetTeams(request);
+        }
+
+        public async Task RemovePlayerFromTeam(int teamId, int playerId)
+        {
+            await _repository.RemovePlayerFromTeam(teamId, playerId);
         }
     }
 }

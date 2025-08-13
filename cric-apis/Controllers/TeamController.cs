@@ -44,6 +44,22 @@ namespace cric_apis.Controllers
             return Ok(ApiResponse<object>.Ok(newTeam));
         }
 
+        [HttpGet]
+        [Route("getteamplayerbyid")]
+        public async Task<IActionResult> GetTeamPlayerById([FromQuery] int id)
+        {
+            var teamPlayer = await _service.GetTeamPlayerById(id);
+            return Ok(ApiResponse<object>.Ok(teamPlayer));
+        }
+
+        [HttpPost]
+        [Route("addplayertoteam")]
+        public async Task<IActionResult> AddPlayerToTeam([FromQuery] int teamId, [FromQuery] int playerId)
+        {
+            var newTeamPlayer = await _service.AddPlayerToTeam(teamId, playerId);
+            return Ok(ApiResponse<object>.Ok(newTeamPlayer));
+        }
+
         [HttpPut]
         [Route("edit/{id}")]
         public async Task<IActionResult> EditPlayer([FromRoute] int id, [FromBody] string name)
@@ -59,6 +75,15 @@ namespace cric_apis.Controllers
         {
             await _service.DeleteTeam(id);
             return Ok(ApiResponse<object>.Ok("Team has been Deleted!"));
+        }
+        
+        [HttpDelete]
+        [Route("removeplayerfromteam")]
+
+        public async Task<IActionResult> RemovePlayerFromTeam([FromQuery] int teamId, [FromQuery] int playerId)
+        {
+            await _service.RemovePlayerFromTeam(teamId, playerId);
+            return Ok(ApiResponse<object>.Ok("Player has been removed from the team!"));
         }
     }
 }
