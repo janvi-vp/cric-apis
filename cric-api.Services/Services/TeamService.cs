@@ -19,6 +19,43 @@ namespace cric_api.Services.Services
             _repository = repository;
         }
 
+        public async Task<TeamViewModel> AddTeam(CreateTeam team)
+        {
+            var newTeam = await _repository.AddTeam(team);
+            return newTeam;
+        }
+
+        public async Task DeleteTeam(int id)
+        {
+            await _repository.DeleteTeam(id);
+        }
+
+        public async Task<TeamViewModel> EditTeam(int id, string name)
+        {
+            var isExist = await _repository.IsExist(id);
+
+            if (!isExist)
+            {
+                throw new Exception("No such team exists!");
+            }
+
+            var entity = await _repository.GetTeamById(id);
+
+            if (!string.IsNullOrEmpty(name) && name != entity.Name)
+            {
+                entity.Name = name;
+            }
+
+            var editedTeam = await _repository.EditTeam(id, name);
+            return editedTeam;
+            
+        }
+
+        public async Task<TeamViewModel> GetTeamById(int id)
+        {
+            return await _repository.GetTeamById(id);
+        }
+
         public async Task<PaginatedResponse<TeamViewModel>> GetTeams(GetTeamsRequestModel request)
         {
             return await _repository.GetTeams(request);

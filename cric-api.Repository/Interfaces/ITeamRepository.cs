@@ -11,5 +11,15 @@ namespace cric_api.Repository.Interfaces
     public interface ITeamRepository
     {
         Task<PaginatedResponse<TeamViewModel>> GetTeams(GetTeamsRequestModel request);
+
+        Task<TeamViewModel> AddTeam(CreateTeam team);
+
+        Task<bool> IsExist(int id);
+
+        Task<TeamViewModel> GetTeamById(int id);
+
+        Task<TeamViewModel> EditTeam(int id, string name);
+
+        Task DeleteTeam(int id);
     }
 }

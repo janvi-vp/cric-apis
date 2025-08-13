@@ -11,5 +11,13 @@ namespace cric_api.Services.Interfaces
     public interface ITeamService
     {
         Task<PaginatedResponse<TeamViewModel>> GetTeams(GetTeamsRequestModel request);
+
+        Task<TeamViewModel> AddTeam(CreateTeam team);
+
+        Task<TeamViewModel> GetTeamById(int id);
+
+        Task<TeamViewModel> EditTeam(int id, string name);
+
+        Task DeleteTeam(int id);
     }
 }

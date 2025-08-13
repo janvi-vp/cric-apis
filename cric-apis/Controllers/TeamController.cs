@@ -27,5 +27,38 @@ namespace cric_apis.Controllers
             var teams = await _service.GetTeams(request);
             return Ok(ApiResponse<object>.Ok(teams));
         }
+
+        [HttpGet]
+        [Route("getbyid")]
+        public async Task<IActionResult> GetById([FromQuery] int id)
+        {
+            var team = await _service.GetTeamById(id);
+            return Ok(ApiResponse<object>.Ok(team));
+        }
+
+        [HttpPost]
+        [Route("add")]
+        public async Task<IActionResult> AddPlayer([FromBody] CreateTeam team)
+        {
+            var newTeam = await _service.AddTeam(team);
+            return Ok(ApiResponse<object>.Ok(newTeam));
+        }
+
+        [HttpPut]
+        [Route("edit/{id}")]
+        public async Task<IActionResult> EditPlayer([FromRoute] int id, [FromBody] string name)
+        {
+            var editedTeam = await _service.EditTeam(id, name);
+            return Ok(ApiResponse<object>.Ok(editedTeam));
+        }
+
+        [HttpDelete]
+        [Route("delete/{id}")]
+
+        public async Task<IActionResult> DeleteTeam([FromRoute] int id)
+        {
+            await _service.DeleteTeam(id);
+            return Ok(ApiResponse<object>.Ok("Team has been Deleted!"));
+        }
     }
 }

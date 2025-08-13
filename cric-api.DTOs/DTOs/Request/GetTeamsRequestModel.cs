@@ -9,5 +9,7 @@ namespace cric_api.DTOs.DTOs.Request
     public class GetTeamsRequestModel : PaginatedSortingRequest
     {
         public string? SearchText { get; set; }
+
+        public int? PlayerId { get; set; }
     }
 }
