@@ -20,16 +20,16 @@ namespace cric_apis.Controllers
 
         [HttpGet]
         [Route("getall")]
-        public async Task<IActionResult> GetAll([FromQuery]GetPlayersRequestModel request)
+        public async Task<IActionResult> GetAllPlayers([FromQuery]GetPlayersRequestModel request)
         {
-            var players = await _service.GetPlayers(request);
+            var players = await _service.GetAllPlayers(request);
             return Ok(ApiResponse<object>.Ok(players));
         }
 
         [HttpGet]
         [Route("getbyid")]
 
-        public async Task<IActionResult> GetById([FromQuery] int id)
+        public async Task<IActionResult> GetPlayerById([FromQuery] int id)
         {
             var player = await _service.GetPlayerById(id);
             return Ok(ApiResponse<object>.Ok(player));

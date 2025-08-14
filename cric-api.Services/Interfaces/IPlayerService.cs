@@ -11,13 +11,7 @@ namespace cric_api.Services.Interfaces
 {
     public interface IPlayerService
     {
-        Task<PaginatedResponse<PlayerViewModel>> GetPlayers(GetPlayersRequestModel request);
-
-        Task<List<PlayerViewModel>> GetAllPlayers(int pageNumber, int pageSize);
-
-        Task<List<PlayerViewModel>> GetAllPlayersByFilter(string firstName, string lastName, string email);
-
-        Task<List<PlayerViewModel>> GetALlPlayersBySorting(string sortingParam);
+        Task<PaginatedResponse<PlayerViewModel>> GetAllPlayers(GetPlayersRequestModel request);
 
         Task<PlayerViewModel> GetPlayerById(int id);
 

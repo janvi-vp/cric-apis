@@ -76,24 +76,9 @@ namespace cric_api.Services
             return editedPlayer;
         }
 
-        public async Task<List<PlayerViewModel>> GetAllPlayers(int pageNumber, int pageSize)
+        public async Task<PaginatedResponse<PlayerViewModel>> GetAllPlayers(GetPlayersRequestModel request)
         {
-            return await _repository.GetAllPlayers(pageNumber, pageSize);
-        }
-
-        public async Task<PaginatedResponse<PlayerViewModel>> GetPlayers(GetPlayersRequestModel request)
-        {
-            return await _repository.GetPlayers(request);
-        }
-
-        public async Task<List<PlayerViewModel>> GetAllPlayersByFilter(string firstName, string lastName, string email)
-        {
-            return await _repository.GetAllPlayersByFilter(firstName, lastName, email);
-        }
-
-        public async Task<List<PlayerViewModel>> GetALlPlayersBySorting(string sortingParam)
-        {
-            return await _repository.GetALlPlayersBySorting(sortingParam);
+            return await _repository.GetAllPlayers(request);
         }
 
         public async Task<PlayerViewModel> GetPlayerById(int id)

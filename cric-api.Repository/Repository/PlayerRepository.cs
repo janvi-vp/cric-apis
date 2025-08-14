@@ -76,13 +76,7 @@ namespace cric_api.Repository
             return await GetPlayerById(player.Id);
         }
 
-        public async Task<List<PlayerViewModel>> GetAllPlayers(int pageNumber, int pageSize)
-        {
-            var players = await _context.Players.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
-            return players.ToViewModel();
-        }
-
-        public async Task<PaginatedResponse<PlayerViewModel>> GetPlayers(GetPlayersRequestModel request)
+        public async Task<PaginatedResponse<PlayerViewModel>> GetAllPlayers(GetPlayersRequestModel request)
         {
             IQueryable<Player> query = _context.Players;
 
@@ -96,26 +90,6 @@ namespace cric_api.Repository
             var result = await query.ToPaginatedAsync(request);
 
             return new PaginatedResponse<PlayerViewModel>(result.Items.ToList().ToViewModel(), result.TotalCount, result.PageNumber, result.PageSize);
-        }
-
-        public async Task<List<PlayerViewModel>> GetAllPlayersByFilter(string firstName, string lastName, string email)
-        {
-            var players = await _context.Players.Where(p => p.FirstName.Contains(firstName) || p.LastName.Contains(lastName) || p.Email.Contains(email)).ToListAsync();
-            return players.ToViewModel();
-        }
-
-        public async Task<List<PlayerViewModel>> GetALlPlayersBySorting(string sortingParam)
-        {
-            if (sortingParam == "DSC")
-            {
-                var players = await _context.Players.Order().ToListAsync();
-                return players.ToViewModel();
-            }
-            else
-            {
-                var players = await _context.Players.OrderDescending().ToListAsync();
-                return players.ToViewModel();
-            }
         }
 
         public async Task<PlayerViewModel> GetPlayerById(int id)
