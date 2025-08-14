@@ -12,6 +12,6 @@ namespace cric_api.Models
         
         public required string Name { get; set; }
 
-        public List<TeamPlayer> TeamPlayers { get; set; }
+        public List<TeamPlayer> TeamPlayers { get; set; } = [];
     }
 }

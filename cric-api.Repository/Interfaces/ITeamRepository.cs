@@ -24,9 +24,7 @@ namespace cric_api.Repository.Interfaces
 
         Task DeleteTeam(int id);
 
-        Task<TeamPlayerViewModel> AddPlayerToTeam(int teamId, int playerId);
-
-        Task<TeamPlayerViewModel> GetTeamPlayerById(int id);
+        Task<TeamViewModel> AddPlayerToTeam(int teamId, int playerId);
 
         Task RemovePlayerFromTeam(int teamId, int playerId);
     }

@@ -19,10 +19,10 @@ namespace cric_api.Services.Services
             _repository = repository;
         }
 
-        public async Task<TeamPlayerViewModel> AddPlayerToTeam(int teamId, int playerId)
+        public async Task<TeamViewModel> AddPlayerToTeam(int teamId, int playerId)
         {
-            var newTeamPlayer = await _repository.AddPlayerToTeam(teamId, playerId);
-            return newTeamPlayer;
+            var team = await _repository.AddPlayerToTeam(teamId, playerId);
+            return team;
         }
 
         public async Task<TeamViewModel> AddTeam(CreateTeam team)
@@ -60,11 +60,6 @@ namespace cric_api.Services.Services
         public async Task<TeamViewModel> GetTeamById(int id)
         {
             return await _repository.GetTeamById(id);
-        }
-
-        public async Task<TeamPlayerViewModel> GetTeamPlayerById(int id)
-        {
-            return await _repository.GetTeamPlayerById(id);
         }
 
         public async Task<PaginatedResponse<TeamViewModel>> GetTeams(GetTeamsRequestModel request)

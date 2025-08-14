@@ -44,14 +44,6 @@ namespace cric_apis.Controllers
             return Ok(ApiResponse<object>.Ok(newTeam));
         }
 
-        [HttpGet]
-        [Route("getteamplayerbyid")]
-        public async Task<IActionResult> GetTeamPlayerById([FromQuery] int id)
-        {
-            var teamPlayer = await _service.GetTeamPlayerById(id);
-            return Ok(ApiResponse<object>.Ok(teamPlayer));
-        }
-
         [HttpPost]
         [Route("addplayertoteam")]
         public async Task<IActionResult> AddPlayerToTeam([FromQuery] int teamId, [FromQuery] int playerId)

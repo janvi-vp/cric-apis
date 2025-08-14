@@ -36,19 +36,20 @@ namespace cric_api.Repository.Repository
             };
 
             await _context.Teams.AddAsync(newTeam);
-            await _context.SaveChangesAsync();
 
             if (team.PlayerIds != null && team.PlayerIds.Any())
             {
+                var players = await _context.Players.Where(p => team.PlayerIds.Contains(p.Id)).ToListAsync();
                 var teamPlayers = team.PlayerIds.Select(playerId => new TeamPlayer
                 {
-                    TeamId = newTeam.Id,
-                    PlayerId = playerId
+                    Team = newTeam,
+                    Player = players.First(p => p.Id == playerId)
                 }).ToList();
 
                 await _context.TeamPlayers.AddRangeAsync(teamPlayers);
-                await _context.SaveChangesAsync();
             }
+
+            await _context.SaveChangesAsync();
 
             return await GetTeamById(newTeam.Id);
 
@@ -70,8 +71,10 @@ namespace cric_api.Repository.Repository
 
         public async Task<TeamViewModel> GetTeamById(int id)
         {
-            var team = await _context.Teams.FindAsync(id);
-            return ToTeamViewModel(team);
+            var team = await _context.Teams
+                    .Include(x => x.TeamPlayers).ThenInclude(y => y.Player)
+                    .FirstAsync(x => x.Id == id);
+            return team.ToViewModel();
         }
 
         public async Task<PaginatedResponse<TeamViewModel>> GetTeams(GetTeamsRequestModel request)
@@ -85,44 +88,17 @@ namespace cric_api.Repository.Repository
 
             if (request.PlayerId.HasValue)
             {
-                query = query.Where(t => t.TeamPlayers.Any(tp => tp.PlayerId == request.PlayerId));
+                query = query.Where(t => t.TeamPlayers.Any(tp => tp.Player.Id == request.PlayerId));
             }
 
             query = query.OrderByColumn(request.SortByColumn, request.SortDirection == Enums.SortDirection.ASC);
 
             var result = await query.ToPaginatedAsync(request);
 
-            return new PaginatedResponse<TeamViewModel>(ToTeamViewModel(result.Items.ToList()), result.TotalCount, result.PageNumber, result.PageSize);
+            return new PaginatedResponse<TeamViewModel>(result.Items.ToList().ToViewModel(), result.TotalCount, result.PageNumber, result.PageSize);
         }
 
-        private TeamViewModel ToTeamViewModel(Team team)
-        {
-            return new TeamViewModel
-            {
-                Id = team.Id,
-                Name = team.Name
-            };
-        }
 
-        private List<TeamViewModel> ToTeamViewModel(List<Team> teams)
-        {
-            return teams.Select(s => ToTeamViewModel(s)).ToList();
-        }
-
-        private TeamPlayerViewModel ToTeamPlayerViewModel(TeamPlayer teamPlayer)
-        {
-            return new TeamPlayerViewModel
-            {
-                Id = teamPlayer.Id,
-                TeamId = teamPlayer.TeamId,
-                PlayerId = teamPlayer.PlayerId
-            };
-        }
-
-        private List<TeamPlayerViewModel> ToTeamPlayerViewModel(List<TeamPlayer> teamPlayers)
-        {
-            return teamPlayers.Select(s => ToTeamPlayerViewModel(s)).ToList();
-        }
 
         public async Task<bool> IsExist(int id)
         {
@@ -139,27 +115,21 @@ namespace cric_api.Repository.Repository
             }
         }
 
-        public async Task<TeamPlayerViewModel> GetTeamPlayerById(int id)
+        public async Task<TeamViewModel> AddPlayerToTeam(int teamId, int playerId)
         {
-            var teamPlayer = await _context.TeamPlayers.FindAsync(id);
-            return ToTeamPlayerViewModel(teamPlayer);
-        }
-
-        public async Task<TeamPlayerViewModel> AddPlayerToTeam(int teamId, int playerId)
-        {
-            var isTeamExist = await _context.Teams.FindAsync(teamId);
-
-            if (isTeamExist != null)
+            var team = await _context.Teams.FindAsync(teamId);
+            var player = await _context.Players.FindAsync(playerId);
+            if (team != null && player != null)
             {
                 var newTeamPlayer = new TeamPlayer
                 {
-                    TeamId = teamId,
-                    PlayerId = playerId
+                    Team = team,
+                    Player = player
                 };
 
                 await _context.TeamPlayers.AddAsync(newTeamPlayer);
                 await _context.SaveChangesAsync();
-                return await GetTeamPlayerById(newTeamPlayer.Id);
+                return await GetTeamById(teamId);
             }
 
             else
@@ -170,7 +140,7 @@ namespace cric_api.Repository.Repository
 
         public async Task RemovePlayerFromTeam(int teamId, int playerId)
         {
-            var teamPlayerToBeDeleted = await _context.TeamPlayers.FirstOrDefaultAsync(x => x.TeamId == teamId && x.PlayerId == playerId);
+            var teamPlayerToBeDeleted = await _context.TeamPlayers.FirstOrDefaultAsync(x => x.Team.Id == teamId && x.Player.Id == playerId);
             if (teamPlayerToBeDeleted != null)
             {
                 _context.TeamPlayers.Remove(teamPlayerToBeDeleted);

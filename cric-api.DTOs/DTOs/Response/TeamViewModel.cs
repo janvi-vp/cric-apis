@@ -1,3 +1,4 @@
+using cric_api.DTOs.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,8 @@ namespace cric_api.DTOs.DTOs.Response
         public int Id { get; set; }
 
         public string Name { get; set; }
-        
+
+        public List<PlayerViewModel> Players { get; set; } = new List<PlayerViewModel>();
+
     }
 }
