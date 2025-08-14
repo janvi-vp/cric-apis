@@ -16,6 +16,8 @@ namespace cric_api.Data
 
         public DbSet<Team> Teams { get; set; }
 
+        public DbSet<Venue> Venues { get; set; }
+
         public DbSet<TeamPlayer> TeamPlayers { get; set; } // join table
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

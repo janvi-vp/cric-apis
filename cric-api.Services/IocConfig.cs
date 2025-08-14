@@ -16,6 +16,7 @@ namespace cric_api.Services
             Repository.IocConfig.ConfigureService(ref services, connectionString);
             services.AddTransient<IPlayerService, PlayerService>();
             services.AddTransient<ITeamService, TeamService>();
+            services.AddTransient<IVenueService, VenueService>();
         }
     }
 }

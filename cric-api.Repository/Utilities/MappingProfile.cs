@@ -1,6 +1,7 @@
 ﻿using cric_api.DTOs.DTOs.Response;
 using cric_api.DTOs.Response;
 using cric_api.Models;
+using cric_api.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,6 +45,23 @@ namespace cric_api.Repository.Utilities
         public static List<PlayerViewModel> ToViewModel(this List<Player> players)
         {
             return players.Select(s => s.ToViewModel()).ToList();
+        }
+
+        public static VenueViewModel ToViewModel(this Venue venue)
+        {
+            return new VenueViewModel
+            {
+                Id = venue.Id,
+                Name = venue.Name,
+                City = venue.City,
+                State = venue.State,
+                Country = venue.Country
+            };
+        }
+
+        public static List<VenueViewModel> ToViewModel(this List<Venue> venues)
+        {
+            return venues.Select(s => s.ToViewModel()).ToList();
         }
     }
 }
