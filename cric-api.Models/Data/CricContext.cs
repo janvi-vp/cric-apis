@@ -18,6 +18,8 @@ namespace cric_api.Data
 
         public DbSet<Venue> Venues { get; set; }
 
+        public DbSet<Match> Matches { get; set; }
+
         public DbSet<TeamPlayer> TeamPlayers { get; set; } // join table
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -35,6 +37,18 @@ namespace cric_api.Data
                 .WithMany(p => p.TeamPlayers)
                 .HasForeignKey(tp => tp.PlayerId)
                 .OnDelete(DeleteBehavior.Cascade); // cascade when player deleted
+
+            modelBuilder.Entity<Match>()
+                .HasOne(m => m.Team1)
+                .WithMany() // no navigation
+                .HasForeignKey(m => m.Team1Id)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Match>()
+                .HasOne(m => m.Team2)
+                .WithMany() // no navigation
+                .HasForeignKey(m => m.Team2Id)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

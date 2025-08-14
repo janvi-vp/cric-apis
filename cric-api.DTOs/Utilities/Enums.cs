@@ -19,5 +19,12 @@ namespace cric_api.DTOs.Utilities
         {
             ASC, DESC
         }
+
+        public enum TypeOfMatch
+        {
+            Test,
+            ODI,
+            T20,
+        }
     }
 }
