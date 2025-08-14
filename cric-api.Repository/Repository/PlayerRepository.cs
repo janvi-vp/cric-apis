@@ -89,38 +89,18 @@ namespace cric_api.Repository
 
             var result = await query.ToPaginatedAsync(request);
 
-            return new PaginatedResponse<PlayerViewModel>(ToPlayerViewModel(result.Items.ToList()), result.TotalCount, result.PageNumber, result.PageSize);
+            return new PaginatedResponse<PlayerViewModel>(result.Items.ToList().ToViewModel(), result.TotalCount, result.PageNumber, result.PageSize);
         }
 
         public async Task<PlayerViewModel> GetPlayerById(int id)
         {
-            var player = await _context.Players.Where(p => p.Id == id).FirstAsync();
-            return ToPlayerViewModel(player);
+            var player = await _context.Players.Where(p => p.Id == id).FirstOrDefaultAsync();
+            return player.ToViewModel();
         }
 
         public async Task<bool> IsExist(int id)
         {
             return await _context.Players.AnyAsync(p => p.Id == id);
         }
-
-        private PlayerViewModel ToPlayerViewModel(Player player)
-        {
-            return new PlayerViewModel
-            {
-                Id = player.Id,
-                FirstName = player.FirstName,
-                LastName = player.LastName,
-                Email = player.Email,
-                Birthday = player.Birthday,
-                BirthPlace = player.BirthPlace,
-                Role = player.Role.ToString(),
-                RoleEnum = player.Role
-            };
-        }
-
-        private List<PlayerViewModel> ToPlayerViewModel(List<Player> players)
-        {
-            return players.Select(s => ToPlayerViewModel(s)).ToList();
-        } 
     }
 }
