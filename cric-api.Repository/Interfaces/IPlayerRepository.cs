@@ -11,12 +11,6 @@ namespace cric_api.Repository.Interfaces
 {
     public interface IPlayerRepository
     {
-        Task<List<PlayerViewModel>> GetAllPlayers(int pageNumber, int pageSize);
-
-        Task<List<PlayerViewModel>> GetAllPlayersByFilter(string firstName, string lastName, string email);
-
-        Task<List<PlayerViewModel>> GetALlPlayersBySorting(string sortingParam);
-
         Task<PlayerViewModel> GetPlayerById(int id);
 
         Task<bool> IsExist(int id);
@@ -26,6 +20,7 @@ namespace cric_api.Repository.Interfaces
         Task <PlayerViewModel> EditPlayer(PlayerViewModel player);
 
         Task DeletePlayer(int id);
-        Task<PaginatedResponse<PlayerViewModel>> GetPlayers(GetPlayersRequestModel request);
+
+        Task<PaginatedResponse<PlayerViewModel>> GetAllPlayers(GetPlayersRequestModel request);
     }
 }

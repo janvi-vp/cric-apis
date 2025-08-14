@@ -76,13 +76,7 @@ namespace cric_api.Repository
             return await GetPlayerById(player.Id);
         }
 
-        public async Task<List<PlayerViewModel>> GetAllPlayers(int pageNumber, int pageSize)
-        {
-            var players = await _context.Players.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
-            return ToPlayerViewModel(players);
-        }
-
-        public async Task<PaginatedResponse<PlayerViewModel>> GetPlayers(GetPlayersRequestModel request)
+        public async Task<PaginatedResponse<PlayerViewModel>> GetAllPlayers(GetPlayersRequestModel request)
         {
             IQueryable<Player> query = _context.Players;
 
@@ -98,29 +92,9 @@ namespace cric_api.Repository
             return new PaginatedResponse<PlayerViewModel>(ToPlayerViewModel(result.Items.ToList()), result.TotalCount, result.PageNumber, result.PageSize);
         }
 
-        public async Task<List<PlayerViewModel>> GetAllPlayersByFilter(string firstName, string lastName, string email)
-        {
-            var players = await _context.Players.Where(p => p.FirstName.Contains(firstName) || p.LastName.Contains(lastName) || p.Email.Contains(email)).ToListAsync();
-            return ToPlayerViewModel(players);
-        }
-
-        public async Task<List<PlayerViewModel>> GetALlPlayersBySorting(string sortingParam)
-        {
-            if (sortingParam == "DSC")
-            {
-                var players = await _context.Players.Order().ToListAsync();
-                return ToPlayerViewModel(players);
-            }
-            else
-            {
-                var players = await _context.Players.OrderDescending().ToListAsync();
-                return ToPlayerViewModel(players);
-            }
-        }
-
         public async Task<PlayerViewModel> GetPlayerById(int id)
         {
-            var player = await _context.Players.Where(p => p.Id == id).FirstOrDefaultAsync();
+            var player = await _context.Players.Where(p => p.Id == id).FirstAsync();
             return ToPlayerViewModel(player);
         }
 
