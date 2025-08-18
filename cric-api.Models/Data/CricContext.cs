@@ -39,15 +39,15 @@ namespace cric_api.Data
                 .OnDelete(DeleteBehavior.Cascade); // cascade when player deleted
 
             modelBuilder.Entity<Match>()
-                .HasOne(m => m.Team1)
+                .HasOne(m => m.HomeTeam)
                 .WithMany() // no navigation
-                .HasForeignKey(m => m.Team1Id)
+                .HasForeignKey(m => m.HomeTeamId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Match>()
-                .HasOne(m => m.Team2)
+                .HasOne(m => m.AwayTeam)
                 .WithMany() // no navigation
-                .HasForeignKey(m => m.Team2Id)
+                .HasForeignKey(m => m.AwayTeamId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

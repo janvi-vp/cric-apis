@@ -15,7 +15,5 @@ namespace cric_api.Models
 
         public List<TeamPlayer> TeamPlayers { get; set; } = [];
 
-        [NotMapped]
-        public List<Match> Matches { get; set; } = [];
     }
 }

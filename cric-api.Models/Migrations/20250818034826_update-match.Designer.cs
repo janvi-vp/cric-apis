@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using cric_api.Data;
 
@@ -11,9 +12,11 @@ using cric_api.Data;
 namespace cric_api.Models.Migrations
 {
     [DbContext(typeof(CricContext))]
-    partial class CricContextModelSnapshot : ModelSnapshot
+    [Migration("20250818034826_update-match")]
+    partial class updatematch
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,12 +42,12 @@ namespace cric_api.Models.Migrations
                     b.Property<int>("HomeTeamId")
                         .HasColumnType("int");
 
-                    b.Property<int>("MatchType")
-                        .HasColumnType("int");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TypeOfMatch")
+                        .HasColumnType("int");
 
                     b.Property<int>("VenueId")
                         .HasColumnType("int");

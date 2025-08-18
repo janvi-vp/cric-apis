@@ -13,7 +13,7 @@ namespace cric_api.Models.Models
 
         public required string Title { get; set; }
 
-        public required TypeOfMatch TypeOfMatch { get; set; }
+        public required DTOs.Utilities.Enums.MatchType MatchType { get; set; }
 
         public required DateTime DateTime { get; set; }
 
@@ -21,13 +21,13 @@ namespace cric_api.Models.Models
 
         public required Venue Venue { get; set; }
 
-        public int Team1Id { get; set; }
+        public int HomeTeamId { get; set; }
 
-        public required Team Team1 { get; set; }
+        public required Team HomeTeam { get; set; }
 
-        public int Team2Id { get; set; }
+        public int AwayTeamId { get; set; }
 
-        public required Team Team2 { get; set; }
+        public required Team AwayTeam { get; set; }
 
     }
 }
