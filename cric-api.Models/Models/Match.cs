@@ -19,15 +19,17 @@ namespace cric_api.Models.Models
 
         public int VenueId { get; set; }
 
-        public required Venue Venue { get; set; }
+        public Venue Venue { get; set; }
 
         public int HomeTeamId { get; set; }
 
-        public required Team HomeTeam { get; set; }
+        public Team HomeTeam { get; set; }
 
         public int AwayTeamId { get; set; }
 
-        public required Team AwayTeam { get; set; }
+        public Team AwayTeam { get; set; }
+
+        public List<MatchPlayer> MatchPlayers { get; set; } = new List<MatchPlayer>();
 
     }
 }
