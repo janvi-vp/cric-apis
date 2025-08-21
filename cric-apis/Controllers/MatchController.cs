@@ -24,8 +24,8 @@ namespace cric_apis.Controllers
         [Route("schedule")]
         public async Task<IActionResult> ScheduleMatch([FromBody] ScheduleMatch match)
         {
-            await _service.ScheduleMatch(match);
-            return Ok(ApiResponse<object>.Ok("Match has been Scheduled!"));
+            var newMatch = await _service.ScheduleMatch(match);
+            return Ok(ApiResponse<object>.Ok(newMatch));
         }
 
     }
