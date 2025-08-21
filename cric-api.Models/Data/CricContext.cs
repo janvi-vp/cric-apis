@@ -22,7 +22,7 @@ namespace cric_api.Data
 
         public DbSet<TeamPlayer> TeamPlayers { get; set; } // join table
 
-        public DbSet<MatchPlayer> MatchPlayers { get; set; }
+        public DbSet<Squad> Squads { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

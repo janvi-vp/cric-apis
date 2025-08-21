@@ -6,7 +6,7 @@ using static cric_api.DTOs.Utilities.Enums;
 
 namespace cric_api.Models.Models
 {
-    public class MatchPlayer
+    public class Squad
     {
         public int Id { get; set; }
 
@@ -16,6 +16,7 @@ namespace cric_api.Models.Models
         public int PlayerId { get; set; }
         public Player Player { get; set; }
 
-        public TeamSide TeamSide { get; set; }
+        public int TeamId { get; set; }
+        public Team Team { get; set; }
     }
 }

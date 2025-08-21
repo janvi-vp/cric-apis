@@ -29,7 +29,7 @@ namespace cric_api.Models.Models
 
         public Team AwayTeam { get; set; }
 
-        public List<MatchPlayer> MatchPlayers { get; set; } = new List<MatchPlayer>();
+        public List<Squad> MatchPlayers { get; set; } = new List<Squad>();
 
     }
 }

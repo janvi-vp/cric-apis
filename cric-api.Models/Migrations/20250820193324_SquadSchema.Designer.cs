@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using cric_api.Data;
 
@@ -11,9 +12,11 @@ using cric_api.Data;
 namespace cric_api.Models.Migrations
 {
     [DbContext(typeof(CricContext))]
-    partial class CricContextModelSnapshot : ModelSnapshot
+    [Migration("20250820193324_SquadSchema")]
+    partial class SquadSchema
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

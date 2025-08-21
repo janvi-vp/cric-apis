@@ -32,19 +32,19 @@ namespace cric_api.Repository.Repository
 
             foreach (var playerId in match.HomeTeamSquad)
             {
-                newMatch.MatchPlayers.Add(new MatchPlayer
+                newMatch.MatchPlayers.Add(new Squad
                 {
                     PlayerId = playerId,
-                    TeamSide = TeamSide.Home
+                    TeamId = match.HomeTeamId
                 });
             }
 
             foreach (var playerId in match.AwayTeamSquad)
             {
-                newMatch.MatchPlayers.Add(new MatchPlayer
+                newMatch.MatchPlayers.Add(new Squad
                 {
                     PlayerId = playerId,
-                    TeamSide = TeamSide.Away
+                    TeamId = match.AwayTeamId
                 });
             }
 

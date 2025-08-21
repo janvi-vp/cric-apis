@@ -26,11 +26,5 @@ namespace cric_api.DTOs.Utilities
             ODI,
             T20,
         }
-
-        public enum TeamSide
-        {
-            Home = 1,
-            Away = 2
-        }
     }
 }
