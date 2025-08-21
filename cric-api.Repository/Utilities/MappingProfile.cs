@@ -63,5 +63,29 @@ namespace cric_api.Repository.Utilities
         {
             return venues.Select(s => s.ToViewModel()).ToList();
         }
+
+        public static List<MatchViewModel> ToViewMode(this List<Match> matches)
+        {
+            return matches.Select(m => m.ToViewModel()).ToList();
+        }
+
+        public static MatchViewModel ToViewModel(this Match match) 
+        {
+            var matchViewModel = new MatchViewModel()
+            {
+                Id = match.Id,
+                Title = match.Title,
+                MatchTypeEnum = match.MatchType,
+                MatchType = match.MatchType.ToString(),
+                Venue = match.Venue.ToViewModel(),
+                HomeTeam = match.HomeTeam.ToViewModel(),
+                AwayTeam = match.AwayTeam.ToViewModel(),
+            };
+
+            matchViewModel.HomeTeam.Players = match.MatchPlayers.Where(mp => mp.MatchId == match.Id && mp.TeamId == match.HomeTeamId).Select(x => x.Player.ToViewModel()).ToList();
+            matchViewModel.AwayTeam.Players = match.MatchPlayers.Where(mp => mp.MatchId == match.Id && mp.TeamId == match.AwayTeamId).Select(x => x.Player.ToViewModel()).ToList();
+
+            return matchViewModel;
+        }
     }
 }

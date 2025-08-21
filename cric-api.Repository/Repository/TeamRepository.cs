@@ -147,5 +147,13 @@ namespace cric_api.Repository.Repository
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task<List<int>> CheckIfPayersInTeam(int teamId, List<int> playerIds)
+        {
+            return await _context.TeamPlayers
+                .Where(x => x.TeamId == teamId && playerIds.Contains(x.PlayerId))
+                .Select(x => x.PlayerId)
+                .ToListAsync();
+        }
     }
 }

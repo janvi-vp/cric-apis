@@ -27,5 +27,7 @@ namespace cric_api.Repository.Interfaces
         Task<TeamViewModel> AddPlayerToTeam(int teamId, int playerId);
 
         Task RemovePlayerFromTeam(int teamId, int playerId);
+
+        Task<List<int>> CheckIfPayersInTeam(int teamId, List<int> playerIds);
     }
 }
