@@ -12,6 +12,10 @@ namespace cric_api.DTOs.DTOs.Request
         public int VenueId { get; set; }
         public int HomeTeamId { get; set; }
         public int AwayTeamId { get; set; }
+        public int HomeTeamCaptainId { get; set; }
+        public int HomeTeamWicketkeeperId { get; set; }
+        public int AwayTeamCaptainId { get; set; }
+        public int AwayTeamWicketkeeperId { get; set; }
         public List<int> HomeTeamSquad { get; set; } = new();
         public List<int> AwayTeamSquad { get; set; } = new();
     }

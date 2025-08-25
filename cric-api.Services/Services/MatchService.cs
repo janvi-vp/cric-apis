@@ -54,6 +54,34 @@ namespace cric_api.Services.Services
             //    throw new ArgumentException("Away team squad must have exactly 11 players.");
             //}
 
+            var homeTeamCaptain = await _teamRepository.CheckIfPayersInTeam(match.HomeTeamId, [match.HomeTeamCaptainId]);
+
+            if (homeTeamCaptain.Count() == 0)
+            {
+                throw new ArgumentException("Home team captain mentioned is not in home team");
+            }
+
+            var awayTeamCaptain = await _teamRepository.CheckIfPayersInTeam(match.AwayTeamId, [match.AwayTeamCaptainId]);
+
+            if (awayTeamCaptain.Count() == 0)
+            {
+                throw new ArgumentException("Away team captain mentioned is not in away team");
+            }
+
+            var homeTeamWicketkeeper = await _teamRepository.CheckIfPayersInTeam(match.HomeTeamId, [match.HomeTeamWicketkeeperId]);
+
+            if (homeTeamWicketkeeper.Count() == 0)
+            {
+                throw new ArgumentException("Home team wicketkeeper mentioned is not in home team");
+            }
+
+            var awayTeamWicketkeeper = await _teamRepository.CheckIfPayersInTeam(match.AwayTeamId, [match.AwayTeamWicketkeeperId]);
+
+            if (awayTeamWicketkeeper.Count() == 0)
+            {
+                throw new ArgumentException("Away team wicketkeeper mentioned is not in away team");
+            }
+
             return await _repository.ScheduleMatch(match);
         }
     }

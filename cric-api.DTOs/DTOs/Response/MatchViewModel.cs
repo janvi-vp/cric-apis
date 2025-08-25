@@ -16,5 +16,9 @@ namespace cric_api.DTOs.DTOs.Response
         public VenueViewModel Venue { get; set; }
         public TeamViewModel HomeTeam { get; set; }
         public TeamViewModel AwayTeam { get; set; }
+        public PlayerViewModel HomeTeamCaptain { get; set; }
+        public PlayerViewModel HomeTeamWicketkeeper { get; set; }
+        public PlayerViewModel AwayTeamCaptain { get; set; }
+        public PlayerViewModel AwayTeamWicketkeeper { get; set; }
     }
 }

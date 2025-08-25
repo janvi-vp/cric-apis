@@ -29,6 +29,22 @@ namespace cric_api.Models.Models
 
         public Team AwayTeam { get; set; }
 
+        public int HomeTeamCaptainId { get; set; }
+
+        public Player HomeTeamCaptain { get; set; }
+
+        public int HomeTeamWicketkeeperId { get; set; }
+
+        public Player HomeTeamWicketkeeper { get; set; }
+
+        public int AwayTeamCaptainId { get; set; }
+
+        public Player AwayTeamCaptain { get; set; }
+
+        public int AwayTeamWicketkeeperId { get; set; }
+
+        public Player AwayTeamWicketkeeper { get; set; }
+
         public List<Squad> MatchPlayers { get; set; } = new List<Squad>();
 
     }

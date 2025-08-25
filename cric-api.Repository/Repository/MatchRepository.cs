@@ -28,6 +28,10 @@ namespace cric_api.Repository.Repository
                 .Include(m => m.HomeTeam)
                 .Include(m => m.AwayTeam)
                 .Include(m => m.Venue)
+                .Include(m => m.HomeTeamCaptain)
+                .Include(m => m.AwayTeamCaptain)
+                .Include(m => m.HomeTeamWicketkeeper)
+                .Include(m => m.AwayTeamWicketkeeper)
                 .Include(m => m.MatchPlayers).ThenInclude(mp => mp.Player)
             .FirstAsync(m => m.Id == id);
 
@@ -46,7 +50,11 @@ namespace cric_api.Repository.Repository
                 DateTime = match.DateTime,
                 VenueId = match.VenueId,
                 HomeTeamId = match.HomeTeamId,
-                AwayTeamId = match.AwayTeamId            
+                AwayTeamId = match.AwayTeamId,
+                HomeTeamCaptainId = match.HomeTeamCaptainId,
+                AwayTeamCaptainId = match.AwayTeamCaptainId,
+                HomeTeamWicketkeeperId = match.HomeTeamWicketkeeperId,
+                AwayTeamWicketkeeperId = match.AwayTeamWicketkeeperId
             };
 
             foreach (var playerId in match.HomeTeamSquad)

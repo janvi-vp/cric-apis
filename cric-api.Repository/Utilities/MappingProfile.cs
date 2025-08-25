@@ -80,6 +80,10 @@ namespace cric_api.Repository.Utilities
                 Venue = match.Venue.ToViewModel(),
                 HomeTeam = match.HomeTeam.ToViewModel(),
                 AwayTeam = match.AwayTeam.ToViewModel(),
+                HomeTeamCaptain = match.HomeTeamCaptain.ToViewModel(),
+                HomeTeamWicketkeeper = match.HomeTeamWicketkeeper.ToViewModel(),
+                AwayTeamCaptain = match.AwayTeamCaptain.ToViewModel(),
+                AwayTeamWicketkeeper = match.AwayTeamWicketkeeper.ToViewModel()
             };
 
             matchViewModel.HomeTeam.Players = match.MatchPlayers.Where(mp => mp.MatchId == match.Id && mp.TeamId == match.HomeTeamId).Select(x => x.Player.ToViewModel()).ToList();

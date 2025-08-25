@@ -51,6 +51,31 @@ namespace cric_api.Data
                 .WithMany() // no navigation
                 .HasForeignKey(m => m.AwayTeamId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Match>()
+                .HasOne(m => m.HomeTeamCaptain)
+                .WithMany(m => m.MatchesAsHomeTeamCaptain)
+                .HasForeignKey(m => m.HomeTeamCaptainId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Match>()
+                .HasOne(m => m.AwayTeamCaptain)
+                .WithMany(m => m.MatchesAsAwayTeamCaptain)
+                .HasForeignKey(m => m.AwayTeamCaptainId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Match>()
+                .HasOne(m => m.HomeTeamWicketkeeper)
+                .WithMany(m => m.MatchesAsHomeTeamWicketKeeper)
+                .HasForeignKey(m => m.HomeTeamWicketkeeperId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Match>()
+                .HasOne(m => m.AwayTeamWicketkeeper)
+                .WithMany(m => m.MatchesAsAwayTeamWicketKeeper)
+                .HasForeignKey(m => m.AwayTeamWicketkeeperId)
+                .OnDelete(DeleteBehavior.Restrict);
+
         }
     }
 }
