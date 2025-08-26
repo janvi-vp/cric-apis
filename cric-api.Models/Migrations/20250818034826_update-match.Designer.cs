@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using cric_api.Data;
 
@@ -11,9 +12,11 @@ using cric_api.Data;
 namespace cric_api.Models.Migrations
 {
     [DbContext(typeof(CricContext))]
-    partial class CricContextModelSnapshot : ModelSnapshot
+    [Migration("20250818034826_update-match")]
+    partial class updatematch
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,82 +33,34 @@ namespace cric_api.Models.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AwayTeamCaptainId")
-                        .HasColumnType("int");
-
                     b.Property<int>("AwayTeamId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AwayTeamWicketkeeperId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("HomeTeamCaptainId")
-                        .HasColumnType("int");
-
                     b.Property<int>("HomeTeamId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("HomeTeamWicketkeeperId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MatchType")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("TypeOfMatch")
+                        .HasColumnType("int");
+
                     b.Property<int>("VenueId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AwayTeamCaptainId");
-
                     b.HasIndex("AwayTeamId");
 
-                    b.HasIndex("AwayTeamWicketkeeperId");
-
-                    b.HasIndex("HomeTeamCaptainId");
-
                     b.HasIndex("HomeTeamId");
-
-                    b.HasIndex("HomeTeamWicketkeeperId");
 
                     b.HasIndex("VenueId");
 
                     b.ToTable("Matches");
-                });
-
-            modelBuilder.Entity("cric_api.Models.Models.Squad", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("MatchId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PlayerId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TeamId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MatchId");
-
-                    b.HasIndex("PlayerId");
-
-                    b.HasIndex("TeamId");
-
-                    b.ToTable("Squads");
                 });
 
             modelBuilder.Entity("cric_api.Models.Models.TeamPlayer", b =>
@@ -213,39 +168,15 @@ namespace cric_api.Models.Migrations
 
             modelBuilder.Entity("cric_api.Models.Models.Match", b =>
                 {
-                    b.HasOne("cric_api.Models.Player", "AwayTeamCaptain")
-                        .WithMany("MatchesAsAwayTeamCaptain")
-                        .HasForeignKey("AwayTeamCaptainId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("cric_api.Models.Team", "AwayTeam")
                         .WithMany()
                         .HasForeignKey("AwayTeamId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("cric_api.Models.Player", "AwayTeamWicketkeeper")
-                        .WithMany("MatchesAsAwayTeamWicketKeeper")
-                        .HasForeignKey("AwayTeamWicketkeeperId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("cric_api.Models.Player", "HomeTeamCaptain")
-                        .WithMany("MatchesAsHomeTeamCaptain")
-                        .HasForeignKey("HomeTeamCaptainId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("cric_api.Models.Team", "HomeTeam")
                         .WithMany()
                         .HasForeignKey("HomeTeamId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("cric_api.Models.Player", "HomeTeamWicketkeeper")
-                        .WithMany("MatchesAsHomeTeamWicketKeeper")
-                        .HasForeignKey("HomeTeamWicketkeeperId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -257,44 +188,9 @@ namespace cric_api.Models.Migrations
 
                     b.Navigation("AwayTeam");
 
-                    b.Navigation("AwayTeamCaptain");
-
-                    b.Navigation("AwayTeamWicketkeeper");
-
                     b.Navigation("HomeTeam");
 
-                    b.Navigation("HomeTeamCaptain");
-
-                    b.Navigation("HomeTeamWicketkeeper");
-
                     b.Navigation("Venue");
-                });
-
-            modelBuilder.Entity("cric_api.Models.Models.Squad", b =>
-                {
-                    b.HasOne("cric_api.Models.Models.Match", "Match")
-                        .WithMany("MatchPlayers")
-                        .HasForeignKey("MatchId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("cric_api.Models.Player", "Player")
-                        .WithMany()
-                        .HasForeignKey("PlayerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("cric_api.Models.Team", "Team")
-                        .WithMany()
-                        .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Match");
-
-                    b.Navigation("Player");
-
-                    b.Navigation("Team");
                 });
 
             modelBuilder.Entity("cric_api.Models.Models.TeamPlayer", b =>
@@ -316,21 +212,8 @@ namespace cric_api.Models.Migrations
                     b.Navigation("Team");
                 });
 
-            modelBuilder.Entity("cric_api.Models.Models.Match", b =>
-                {
-                    b.Navigation("MatchPlayers");
-                });
-
             modelBuilder.Entity("cric_api.Models.Player", b =>
                 {
-                    b.Navigation("MatchesAsAwayTeamCaptain");
-
-                    b.Navigation("MatchesAsAwayTeamWicketKeeper");
-
-                    b.Navigation("MatchesAsHomeTeamCaptain");
-
-                    b.Navigation("MatchesAsHomeTeamWicketKeeper");
-
                     b.Navigation("TeamPlayers");
                 });
 

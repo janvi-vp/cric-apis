@@ -17,6 +17,7 @@ namespace cric_api.Services
             services.AddTransient<IPlayerService, PlayerService>();
             services.AddTransient<ITeamService, TeamService>();
             services.AddTransient<IVenueService, VenueService>();
+            services.AddTransient<IMatchService, MatchService>();
         }
     }
 }

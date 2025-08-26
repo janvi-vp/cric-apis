@@ -22,6 +22,14 @@ namespace cric_api.Models
         public string? BirthPlace { get; set; }
 
         public required PlayerRole Role { get; set; }
+
+        public List<Match> MatchesAsHomeTeamCaptain { get; set; }
+
+        public List<Match> MatchesAsHomeTeamWicketKeeper { get; set; }
+
+        public List<Match> MatchesAsAwayTeamCaptain { get; set; }
+
+        public List<Match> MatchesAsAwayTeamWicketKeeper { get; set; }
         
         public List<TeamPlayer> TeamPlayers { get; set; }
     }

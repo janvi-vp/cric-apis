@@ -48,7 +48,13 @@ Install EF Core tools (if not already installed):
 dotnet tool install --global dotnet-ef
 ```
 
-Apply existing migrations to create/update the database:
+Create a new migration:
+
+```powershell
+dotnet ef migrations add <MigrationName> --project .\cric-api.Models\cric-api.Models.csproj --startup-project .\cric-apis\cric-apis.csproj
+```
+
+Apply migrations to create/update the database:
 
 ```powershell
 dotnet ef database update --project .\cric-api.Models\cric-api.Models.csproj --startup-project .\cric-apis\cric-apis.csproj
@@ -56,14 +62,16 @@ dotnet ef database update --project .\cric-api.Models\cric-api.Models.csproj --s
 
 Using Visual Studio Package Manager Console:
 
+Create a new migration:
+
 ```powershell
-Update-Database
+Add-Migration AddPlayerExtras -Project cric-api.Models -StartupProject cric-apis -Context CricContext -OutputDir Migrations
 ```
 
-Optional (create a new migration):
+Apply migrations to create/update the database:
 
 ```powershell
-dotnet ef migrations add <MigrationName> --project .\cric-api.Models\cric-api.Models.csproj --startup-project .\cric-apis\cric-apis.csproj
+Update-Database -Project cric-api.Models -StartupProject cric-apis -Context CricContext
 ```
 
 ## Run the API

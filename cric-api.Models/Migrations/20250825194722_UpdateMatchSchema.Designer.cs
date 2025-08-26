@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using cric_api.Data;
 
@@ -11,9 +12,11 @@ using cric_api.Data;
 namespace cric_api.Models.Migrations
 {
     [DbContext(typeof(CricContext))]
-    partial class CricContextModelSnapshot : ModelSnapshot
+    [Migration("20250825194722_UpdateMatchSchema")]
+    partial class UpdateMatchSchema
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,7 +39,7 @@ namespace cric_api.Models.Migrations
                     b.Property<int>("AwayTeamId")
                         .HasColumnType("int");
 
-                    b.Property<int>("AwayTeamWicketkeeperId")
+                    b.Property<int>("AwayTeamWicketkepperId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateTime")
@@ -48,7 +51,7 @@ namespace cric_api.Models.Migrations
                     b.Property<int>("HomeTeamId")
                         .HasColumnType("int");
 
-                    b.Property<int>("HomeTeamWicketkeeperId")
+                    b.Property<int>("HomeTeamWicketkepperId")
                         .HasColumnType("int");
 
                     b.Property<int>("MatchType")
@@ -67,13 +70,13 @@ namespace cric_api.Models.Migrations
 
                     b.HasIndex("AwayTeamId");
 
-                    b.HasIndex("AwayTeamWicketkeeperId");
+                    b.HasIndex("AwayTeamWicketkepperId");
 
                     b.HasIndex("HomeTeamCaptainId");
 
                     b.HasIndex("HomeTeamId");
 
-                    b.HasIndex("HomeTeamWicketkeeperId");
+                    b.HasIndex("HomeTeamWicketkepperId");
 
                     b.HasIndex("VenueId");
 
@@ -225,9 +228,9 @@ namespace cric_api.Models.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("cric_api.Models.Player", "AwayTeamWicketkeeper")
-                        .WithMany("MatchesAsAwayTeamWicketKeeper")
-                        .HasForeignKey("AwayTeamWicketkeeperId")
+                    b.HasOne("cric_api.Models.Player", "AwayTeamWicketkepper")
+                        .WithMany("MatchesAsAwayTeamWicketKepper")
+                        .HasForeignKey("AwayTeamWicketkepperId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -243,9 +246,9 @@ namespace cric_api.Models.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("cric_api.Models.Player", "HomeTeamWicketkeeper")
-                        .WithMany("MatchesAsHomeTeamWicketKeeper")
-                        .HasForeignKey("HomeTeamWicketkeeperId")
+                    b.HasOne("cric_api.Models.Player", "HomeTeamWicketkepper")
+                        .WithMany("MatchesAsHomeTeamWicketKepper")
+                        .HasForeignKey("HomeTeamWicketkepperId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -259,13 +262,13 @@ namespace cric_api.Models.Migrations
 
                     b.Navigation("AwayTeamCaptain");
 
-                    b.Navigation("AwayTeamWicketkeeper");
+                    b.Navigation("AwayTeamWicketkepper");
 
                     b.Navigation("HomeTeam");
 
                     b.Navigation("HomeTeamCaptain");
 
-                    b.Navigation("HomeTeamWicketkeeper");
+                    b.Navigation("HomeTeamWicketkepper");
 
                     b.Navigation("Venue");
                 });
@@ -325,11 +328,11 @@ namespace cric_api.Models.Migrations
                 {
                     b.Navigation("MatchesAsAwayTeamCaptain");
 
-                    b.Navigation("MatchesAsAwayTeamWicketKeeper");
+                    b.Navigation("MatchesAsAwayTeamWicketKepper");
 
                     b.Navigation("MatchesAsHomeTeamCaptain");
 
-                    b.Navigation("MatchesAsHomeTeamWicketKeeper");
+                    b.Navigation("MatchesAsHomeTeamWicketKepper");
 
                     b.Navigation("TeamPlayers");
                 });

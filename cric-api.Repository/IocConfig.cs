@@ -16,6 +16,7 @@ namespace cric_api.Repository
             services.AddTransient<IPlayerRepository, PlayerRepository>();
             services.AddTransient<ITeamRepository, TeamRepository>();
             services.AddTransient<IVenueRepository, VenueRepository>();
+            services.AddTransient<IMatchRepository, MatchRepository>();
         }
     }
 }

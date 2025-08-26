@@ -18,7 +18,11 @@ namespace cric_api.Data
 
         public DbSet<Venue> Venues { get; set; }
 
+        public DbSet<Match> Matches { get; set; }
+
         public DbSet<TeamPlayer> TeamPlayers { get; set; } // join table
+
+        public DbSet<Squad> Squads { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -35,6 +39,43 @@ namespace cric_api.Data
                 .WithMany(p => p.TeamPlayers)
                 .HasForeignKey(tp => tp.PlayerId)
                 .OnDelete(DeleteBehavior.Cascade); // cascade when player deleted
+
+            modelBuilder.Entity<Match>()
+                .HasOne(m => m.HomeTeam)
+                .WithMany() // no navigation
+                .HasForeignKey(m => m.HomeTeamId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Match>()
+                .HasOne(m => m.AwayTeam)
+                .WithMany() // no navigation
+                .HasForeignKey(m => m.AwayTeamId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Match>()
+                .HasOne(m => m.HomeTeamCaptain)
+                .WithMany(m => m.MatchesAsHomeTeamCaptain)
+                .HasForeignKey(m => m.HomeTeamCaptainId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Match>()
+                .HasOne(m => m.AwayTeamCaptain)
+                .WithMany(m => m.MatchesAsAwayTeamCaptain)
+                .HasForeignKey(m => m.AwayTeamCaptainId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Match>()
+                .HasOne(m => m.HomeTeamWicketkeeper)
+                .WithMany(m => m.MatchesAsHomeTeamWicketKeeper)
+                .HasForeignKey(m => m.HomeTeamWicketkeeperId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Match>()
+                .HasOne(m => m.AwayTeamWicketkeeper)
+                .WithMany(m => m.MatchesAsAwayTeamWicketKeeper)
+                .HasForeignKey(m => m.AwayTeamWicketkeeperId)
+                .OnDelete(DeleteBehavior.Restrict);
+
         }
     }
 }
